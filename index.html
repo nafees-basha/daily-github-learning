@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📅 Daily Planner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .date-display {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .task-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .reflection {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-top: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            min-height: 100px;
+            resize: vertical;
+            margin-top: 10px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .clear-day {
+            margin-top: 20px;
+        }
+
+        .clear-day button {
+            background: #ff6b6b;
+            width: 100%;
+        }
+
+        .clear-day button:hover {
+            background: #ff5252;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Daily Planner</h1>
+            <div class="date-display" id="dateDisplay"></div>
+        </div>
+
+        <div class="content">
+            <!-- Weekly Targets -->
+            <div class="section">
+                <div class="section-title">🎯 Weekly Targets</div>
+                <ul class="task-list" id="weeklyTargets"></ul>
+                <div class="task-input">
+                    <input type="text" id="weeklyInput" placeholder="Add a weekly target...">
+                    <button onclick="addWeeklyTarget()">Add</button>
+                </div>
+            </div>
+
+            <!-- Daily Tasks -->
+            <div class="section">
+                <div class="section-title">✅ Daily Tasks</div>
+                <ul class="task-list" id="dailyTasks"></ul>
+                <div class="task-input">
+                    <input type="text" id="dailyInput" placeholder="Add a task for today...">
+                    <button onclick="addDailyTask()">Add</button>
+                </div>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalTasks">0</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="completedTasks">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="progressPercent">0%</div>
+                        <div class="stat-label">Progress</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reflection -->
+            <div class="section">
+                <div class="section-title">📓 Reflection</div>
+                <div class="reflection">
+                    <label>Done well today:</label>
+                    <textarea id="doneWell" placeholder="What went well today?"></textarea>
+                </div>
+                <div class="reflection">
+                    <label>Areas to improve:</label>
+                    <textarea id="toImprove" placeholder="What could be better?"></textarea>
+                </div>
+            </div>
+
+            <!-- Clear Day -->
+            <div class="clear-day">
+                <button onclick="clearDay()">🔄 Start Fresh Tomorrow</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        function init() {
+            updateDateDisplay();
+            loadData();
+            updateStats();
+            setupEnterKeys();
+        }
+
+        function updateDateDisplay() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('dateDisplay').textContent = today;
+        }
+
+        function addWeeklyTarget() {
+            const input = document.getElementById('weeklyInput');
+            if (input.value.trim()) {
+                addTaskToList('weeklyTargets', input.value, 'weekly');
+                input.value = '';
+                saveData();
+            }
+        }
+
+        function addDailyTask() {
+            const input = document.getElementById('dailyInput');
+            if (input.value.trim()) {
+                addTaskToList('dailyTasks', input.value, 'daily');
+                input.value = '';
+                saveData();
+                updateStats();
+            }
+        }
+
+        function addTaskToList(listId, text, type) {
+            const list = document.getElementById(listId);
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = `
+                <input type="checkbox" class="checkbox" onchange="updateStats(); saveData()">
+                <span class="task-text">${escapeHtml(text)}</span>
+                <button class="delete-btn" onclick="this.parentElement.remove(); saveData(); updateStats();">Delete</button>
+            `;
+            list.appendChild(li);
+        }
+
+        function updateStats() {
+            const tasks = document.querySelectorAll('#dailyTasks .task-item');
+            const completed = document.querySelectorAll('#dailyTasks .task-item input:checked');
+            const total = tasks.length;
+            const done = completed.length;
+            const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = done;
+            document.getElementById('progressPercent').textContent = percent + '%';
+        }
+
+        function saveData() {
+            const weeklyTasks = Array.from(document.querySelectorAll('#weeklyTargets .task-item')).map(li => ({
+                text: li.querySelector('.task-text').textContent,
+                completed: li.querySelector('.checkbox').checked
+            }));
+
+            const dailyTasks = Array.from(document.querySelectorAll('#dailyTasks .task-item')).map(li => ({
+                text: li.querySelector('.task-text').textContent,
+                completed: li.querySelector('.checkbox').checked
+            }));
+
+            const reflection = {
+                doneWell: document.getElementById('doneWell').value,
+                toImprove: document.getElementById('toImprove').value
+            };
+
+            const data = {
+                date: new Date().toDateString(),
+                weekly: weeklyTasks,
+                daily: dailyTasks,
+                reflection: reflection
+            };
+
+            localStorage.setItem('plannerData', JSON.stringify(data));
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem('plannerData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                const today = new Date().toDateString();
+
+                if (data.date === today) {
+                    // Same day - load existing data
+                    data.weekly.forEach(task => {
+                        const li = createTaskElement(task);
+                        document.getElementById('weeklyTargets').appendChild(li);
+                    });
+
+                    data.daily.forEach(task => {
+                        const li = createTaskElement(task);
+                        document.getElementById('dailyTasks').appendChild(li);
+                    });
+
+                    document.getElementById('doneWell').value = data.reflection.doneWell || '';
+                    document.getElementById('toImprove').value = data.reflection.toImprove || '';
+                }
+            }
+        }
+
+        function createTaskElement(task) {
+            const li = document.createElement('li');
+            li.className = 'task-item' + (task.completed ? ' completed' : '');
+            li.innerHTML = `
+                <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''} onchange="updateStats(); saveData()">
+                <span class="task-text">${escapeHtml(task.text)}</span>
+                <button class="delete-btn" onclick="this.parentElement.remove(); saveData(); updateStats();">Delete</button>
+            `;
+            return li;
+        }
+
+        function clearDay() {
+            if (confirm('Clear all tasks and start fresh tomorrow?')) {
+                saveData();
+                localStorage.removeItem('plannerData');
+                location.reload();
+            }
+        }
+
+        function setupEnterKeys() {
+            document.getElementById('weeklyInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') addWeeklyTarget();
+            });
+            document.getElementById('dailyInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') addDailyTask();
+            });
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>
