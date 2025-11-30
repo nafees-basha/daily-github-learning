@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProBank - Digital Banking Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffc107;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffc107;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: white;
+            color: #1a3a52;
+        }
+
+        .register-btn {
+            background: #ffc107;
+            border: none;
+            color: #1a3a52;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .register-btn:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0066cc 0%, #1a3a52 50%, #0d1f2d 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: #ffc107;
+            color: #1a3a52;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #ffb300;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5em;
+            color: #1a3a52;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .service-card-header {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+        }
+
+        .service-card-content {
+            padding: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #1a3a52;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .learn-more {
+            color: #ffc107;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .learn-more:hover {
+            color: #ff9800;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #1a3a52;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+        }
+
+        .products-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .product-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .product-box:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .product-box h4 {
+            color: #1a3a52;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .product-box p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.8em;
+            font-weight: bold;
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d1f2d;
+            color: #bbb;
+            padding: 60px 20px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffc107;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            background: #1a3a52;
+            border-radius: 50%;
+            color: #ffc107;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #ffc107;
+            color: #1a3a52;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1.05em;
+            }
+
+            .section-title h2 {
+                font-size: 1.8em;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">💼 ProBank</div>
+            <nav>
+                <ul>
+                    <li><a href="#personal">PERSONAL</a></li>
+                    <li><a href="#business">BUSINESS</a></li>
+                    <li><a href="#products">PRODUCTS</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="login-btn">LOGIN</button>
+                <button class="register-btn">REGISTER NOW</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Manage your business online with ease</h1>
+            <p>Experience seamless digital banking solutions tailored for your needs</p>
+            <button class="cta-button">🔐 LOGIN</button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="business">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive banking solutions for everyone</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-card-header">💰</div>
+                    <div class="service-card-content">
+                        <h3>SME Financing</h3>
+                        <p>Get instant financing solutions for your small and medium enterprises. Flexible repayment terms and competitive rates.</p>
+                        <a href="#" class="learn-more">LEARN MORE →</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-card-header">📈</div>
+                    <div class="service-card-content">
+                        <h3>Investment Solutions</h3>
+                        <p>Grow your wealth with our expert investment advisory and portfolio management services.</p>
+                        <a href="#" class="learn-more">LEARN MORE →</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-card-header">🌍</div>
+                    <div class="service-card-content">
+                        <h3>Global Expansion</h3>
+                        <p>Expand your business globally with our international trade finance and currency solutions.</p>
+                        <a href="#" class="learn-more">LEARN MORE →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="personal">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Why Choose ProBank?</h2>
+                <p>Industry-leading features and benefits</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bank-Level Security</h3>
+                    <p>256-bit encryption and multi-factor authentication to protect your data</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process transactions in seconds with our optimized infrastructure</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h3>24/7 Availability</h3>
+                    <p>Access your accounts anytime, anywhere with our mobile app</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <h3>Expert Support</h3>
+                    <p>Dedicated customer service team ready to help you</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">💎</div>
+                    <h3>Premium Benefits</h3>
+                    <p>Exclusive rewards, cashback, and loyalty programs</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Personalized</h3>
+                    <p>Tailored solutions that match your financial goals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Our Products</h2>
+                <p>Diverse range of banking and financial products</p>
+            </div>
+
+            <div class="products-showcase">
+                <div class="product-box">
+                    <h4>💳 Credit Cards</h4>
+                    <p>Premium credit cards with exclusive rewards, cashback offers, and travel benefits.</p>
+                </div>
+
+                <div class="product-box">
+                    <h4>🏠 Home Loans</h4>
+                    <p>Affordable home financing with flexible tenures and competitive interest rates.</p>
+                </div>
+
+                <div class="product-box">
+                    <h4>🚗 Auto Loans</h4>
+                    <p>Quick and easy vehicle financing with minimal documentation.</p>
+                </div>
+
+                <div class="product-box">
+                    <h4>📚 Education Loans</h4>
+                    <p>Support your education dreams with our education financing solutions.</p>
+                </div>
+
+                <div class="product-box">
+                    <h4>💼 Business Banking</h4>
+                    <p>Complete business banking solutions including payroll, working capital, and trade finance.</p>
+                </div>
+
+                <div class="product-box">
+                    <h4>🎓 Wealth Management</h4>
+                    <p>Professional wealth management and investment advisory services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">5M+</div>
+                <div class="stat-label">Active Customers</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">$50B+</div>
+                <div class="stat-label">Assets Under Management</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Branches Worldwide</div>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime Guarantee</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>PERSONAL BANKING</h4>
+                <ul>
+                    <li><a href="#">Savings Accounts</a></li>
+                    <li><a href="#">Current Accounts</a></li>
+                    <li><a href="#">Credit Cards</a></li>
+                    <li><a href="#">Personal Loans</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>BUSINESS BANKING</h4>
+                <ul>
+                    <li><a href="#">Business Accounts</a></li>
+                    <li><a href="#">Trade Finance</a></li>
+                    <li><a href="#">Working Capital</a></li>
+                    <li><a href="#">Payroll Services</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>SUPPORT</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>CONNECT WITH US</h4>
+                <p style="margin-bottom: 15px;">Follow us on social media</p>
+                <div class="social-icons">
+                    <a href="#">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">in</a>
+                    <a href="#">▶</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 ProBank. All rights reserved. | Privacy Policy | Terms & Conditions | Security Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add button interactions
+        document.querySelectorAll('.login-btn, .register-btn, .cta-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Login/Registration feature coming soon!');
+            });
+        });
+    </script>
+</body>
+</html>
